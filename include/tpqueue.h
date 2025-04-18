@@ -8,12 +8,11 @@ class TPQueue {
   private:
     struct Node {
         T data;
-        Node next;
-        Node(const T& d, Node* n = nullptr) : data(d), next(n) { }
+        Node* next; 
+        Node(const T &d, Node* n = nullptr) : data(d), next(n) { }
     };
     Node* head; 
-
-public:
+public: 
     TPQueue() : head(nullptr) { }
     ~TPQueue() {
         while (!empty()) {
@@ -25,7 +24,7 @@ public:
     }
     void push(const T& value) {
         Node* newNode = new Node(value);
-        if (head == nullptr || value.prior > head->data.prior) {
+        if (!head || value.prior > head->data.prior) {
             newNode->next = head;
             head = newNode;
         } else {
@@ -37,13 +36,15 @@ public:
             current->next = newNode;
         }
     }
-    void pop() {
+    T pop() {
         if (empty()) {
             throw std::underflow_error("Попытка извлечь элемент из пустой очереди");
         }
         Node* temp = head;
+        T value = head->data;
         head = head->next;
         delete temp;
+        return value;
     }
     T& front() {
         if (empty()) {
