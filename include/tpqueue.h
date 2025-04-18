@@ -5,14 +5,15 @@
 
 template<typename T>
 class TPQueue {
-  private:
+   private:
     struct Node {
         T data;
-        Node* next; 
-        Node(const T &d, Node* n = nullptr) : data(d), next(n) { }
+        Node* next;
+        explicit Node(const T &d, Node* n = nullptr) : data(d), next(n) { }
     };
-    Node* head; 
-public: 
+    Node* head;
+
+ public:
     TPQueue() : head(nullptr) { }
     ~TPQueue() {
         while (!empty()) {
@@ -38,7 +39,7 @@ public:
     }
     T pop() {
         if (empty()) {
-            throw std::underflow_error("Попытка извлечь элемент из пустой очереди");
+            throw std::underflow_error("empty");
         }
         Node* temp = head;
         T value = head->data;
@@ -48,13 +49,13 @@ public:
     }
     T& front() {
         if (empty()) {
-            throw std::underflow_error("Попытка обратиться к элементу в пустой очереди");
+            throw std::underflow_error("empty");
         }
         return head->data;
     }
     const T& front() const {
         if (empty()) {
-            throw std::underflow_error("Попытка обратиться к элементу в пустой очереди");
+            throw std::underflow_error("empty");
         }
         return head->data;
     }
